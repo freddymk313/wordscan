@@ -8,7 +8,7 @@ export default function SplashScreen() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      router.replace("/camera"); // redirection après splash
+      router.replace("/home"); // redirection après splash
     }, 2500);
 
     return () => clearTimeout(timeout);
