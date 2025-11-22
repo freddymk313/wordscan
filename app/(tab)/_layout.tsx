@@ -9,9 +9,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: true, // tu peux mettre false si tu ne veux pas le header
-        tabBarActiveTintColor: colorScheme === "dark" ? "#fff" : "#000",
-        tabBarStyle: { backgroundColor: colorScheme === "dark" ? "#000" : "#fff" },
+        headerShown: false, // tu peux mettre false si tu ne veux pas le header
+        // tabBarActiveTintColor: colorScheme === "dark" ? "#fff" : "#000",
+        // tabBarStyle: { backgroundColor: colorScheme === "dark" ? "#000" : "#fff" },
       }}
     >
       <Tabs.Screen

@@ -17,13 +17,13 @@ export default function SplashScreen() {
   return (
     <View className="flex-1 bg-white items-center justify-center">
       <Image
-        source={require("../assets/logo.png")} // change avec ton logo
+        source={require("../assets/logo/logo.png")} // change avec ton logo
         className="w-40 h-40"
         resizeMode="contain"
       />
-      <Text className="text-xl font-semibold mt-4 text-gray-700">
+      {/* <Text className="text-xl font-semibold mt-4 text-gray-700">
         Hand2Word
-      </Text>
+      </Text> */}
     </View>
   );
 }
