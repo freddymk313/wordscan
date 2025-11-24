@@ -1,8 +1,8 @@
 // app/(tab)/_layout.tsx
 import { Tabs } from "expo-router";
-import Feather from '@expo/vector-icons/Feather';
-import Octicons from '@expo/vector-icons/Octicons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Feather from "@expo/vector-icons/Feather";
+import Octicons from "@expo/vector-icons/Octicons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export default function TabLayout() {
@@ -11,9 +11,16 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#0A66C0',
+        tabBarActiveTintColor: "#007bff",
         headerShown: false,
-        // tabBarStyle: { backgroundColor: 'white', height: 60 },
+        tabBarStyle: {
+          backgroundColor: "white",
+          height: 90,
+          paddingTop: 8,
+          borderTopWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
       }}
     >
       <Tabs.Screen
