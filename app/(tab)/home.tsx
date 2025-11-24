@@ -19,7 +19,7 @@ export default function home() {
             <Text className="text-3xl ml-1 font-bold">ordscan</Text>
           </View>
 
-          <AntDesign name="moon" size={22} color="black" />
+          <AntDesign name="moon" size={22} color="black" className="mx-1" />
         </View>
 
         <View className="gap-6 flex-row items-center justify-around py-64">
