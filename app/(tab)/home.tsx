@@ -39,14 +39,14 @@ export default function home() {
           <Pressable onPress={() => console.log("Camera pressed!")}>
             <View className="block p-14 border border-gray-400/80 dark:border-gray-300/60 rounded-3xl items-center justify-center">
               <Entypo name="camera" size={52} color={isDark ? 'white' : 'black'} />
-              <Text className="text-base mt-2 font-bold">Camera</Text>
+              <Text className="text-base mt-2 font-bold dark:text-white">Camera</Text>
             </View>
           </Pressable>
 
           <Pressable onPress={() => console.log("Gallerie pressed!")}>
             <View className="block p-14 border border-gray-400/80 rounded-3xl items-center justify-center">
-              <Entypo name="image" size={52} color="black" />
-              <Text className="text-base mt-2 font-bold">Gallerie</Text>
+              <Entypo name="image" size={52} color={isDark ? 'white': 'black'} />
+              <Text className="text-base mt-2 font-bold dark:text-white">Gallerie</Text>
             </View>
           </Pressable>
         </View>
