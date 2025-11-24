@@ -22,18 +22,30 @@ export default function file() {
           <AntDesign name="moon" size={22} color="black" className="mx-1" />
         </View>
 
-        <View className="gap-6 flex-row items-center justify-around py-64">
-          <Pressable onPress={() => console.log("Camera pressed!")}>
-            <View className="block p-14 border border-gray-400/80 rounded-3xl items-center justify-center">
-              <Entypo name="camera" size={52} color="black" />
-              <Text className="text-base mt-2 font-bold">Camera</Text>
-            </View>
-          </Pressable>
+        <View className="gap-6 flex py-8">
+          <Text className="text-2xl mt-2">Tous les documents</Text>
 
-          <Pressable onPress={() => console.log("Gallerie pressed!")}>
-            <View className="block p-14 border border-gray-400/80 rounded-3xl items-center justify-center">
-              <Entypo name="image" size={52} color="black" />
-              <Text className="text-base mt-2 font-bold">Gallerie</Text>
+          <Pressable onPress={() => console.log("doc pressed!")}>
+            <View className="block py-3 px-4 flex-row items-center border gap-4 border-gray-400/80 rounded-xl">
+              {/* <Image /> */}
+              <View className="h-12 w-12 border border-gray-500"></View>
+
+              <View className="flex-1">
+                <View>
+                  <Text className="text-[17px] mt-2 font-bold">
+                    Luna's Short formula.pdf
+                  </Text>
+                </View>
+
+                <View className="flex-row items-center justify-between">
+                  <Text className="text-sm">
+                    Nov 11 00:27
+                  </Text>
+                  <Text className="text-sm font-semibold">
+                    200KB
+                  </Text>
+                </View>
+              </View>
             </View>
           </Pressable>
         </View>
