@@ -15,15 +15,15 @@ export default function SplashScreen() {
   }, []);
 
   return (
-    <View className="flex-1 bg-white items-center justify-center">
+    <View className="flex-1 bg-white dark:bg-gray-900 items-center justify-center">
       <View className="flex-row items-center">
-                  <Image
-                    source={require("./../assets/logo/logo.png")}
-                    className="w-20 h-20"
-                    resizeMode="contain"
-                  />
-                  <Text className="text-4xl ml-1 font-bold">ordscan</Text>
-                </View>
+        <Image
+          source={require("./../assets/logo/logo.png")}
+          className="w-20 h-20 dark:bg-white rounded-full"
+          resizeMode="contain"
+        />
+        <Text className="text-4xl ml-1 font-bold dark:text-white">ordscan</Text>
+      </View>
     </View>
   );
 }
