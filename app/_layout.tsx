@@ -14,6 +14,10 @@ import { Text, View } from "react-native";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
+  
+
+  console.log(colorScheme);
+  
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
