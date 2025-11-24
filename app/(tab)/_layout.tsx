@@ -8,13 +8,15 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  const isDark = colorScheme === "dark";
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "#007bff",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "white",
+          backgroundColor: isDark ? "#1a202c" : "white",
           height: 90,
           paddingTop: 8,
           borderTopWidth: 0,
