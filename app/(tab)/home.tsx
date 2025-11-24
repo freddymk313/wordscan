@@ -23,12 +23,12 @@ export default function home() {
         </View>
 
         <View className="gap-6 flex-row items-center justify-around py-64">
-          <View className="block p-14 border border-gray-400/90 shadow-md rounded-2xl items-center justify-center">
+          <View className="block p-14 border border-gray-400/80 rounded-2xl items-center justify-center">
             <Entypo name="camera" size={52} color="black" />
             <Text className="text-base mt-2 font-bold">Camera</Text>
           </View>
 
-          <View className="block p-14 border border-gray-400/90 shadow-md rounded-2xl items-center justify-center">
+          <View className="block p-14 border border-gray-400/80 rounded-2xl items-center justify-center">
             <Entypo name="image" size={52} color="black" />
             <Text className="text-base mt-2 font-bold">Gallerie</Text>
           </View>
