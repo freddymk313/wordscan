@@ -19,6 +19,7 @@ export default function TabLayout() {
           backgroundColor: isDark ? "#1a202c" : "white",
           height: 90,
           paddingTop: 8,
+          paddingBottom: 4,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
@@ -30,8 +31,11 @@ export default function TabLayout() {
         options={{
           title: "Accueil",
           tabBarIcon: ({ color }) => (
-            <Octicons name="home-fill" size={20} color={color} />
+            <Octicons name="home-fill" size={22} color={color} />
           ),
+          tabBarLabelStyle:{
+            fontSize: 13,
+          }
         }}
       />
       <Tabs.Screen
@@ -39,8 +43,11 @@ export default function TabLayout() {
         options={{
           title: "Documents",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="folder" size={20} color={color} />
+            <FontAwesome name="folder" size={22} color={color} />
           ),
+          tabBarLabelStyle:{
+            fontSize: 13,
+          }
         }}
       />
     </Tabs>
