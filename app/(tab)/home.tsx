@@ -1,23 +1,17 @@
-import { View, Text, Image, Pressable } from "react-native";
-import React from "react";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
-import Entypo from "@expo/vector-icons/Entypo";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Entypo from "@expo/vector-icons/Entypo";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function home() {
-  // const colorScheme = useColorScheme()
+export default function Home() {
   const colorScheme = useColorScheme();
 
   const isDark = colorScheme === "dark";
 
-  // const toggleTheme = () => {
-  //   const newTheme = isDark ? "light" : "dark";
-  //   setColorScheme(newTheme);
-
-  //   console.log(`theme changer a : ${newTheme}`);
-  // };
+  const router = useRouter();
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-gray-900">
@@ -36,7 +30,7 @@ export default function home() {
         </View>
 
         <View className="gap-6 flex-row items-center justify-around py-64">
-          <Pressable onPress={() => console.log("Camera pressed!")}>
+          <Pressable onPress={() => router.push("/camera")}>
             <View className="block p-14 border border-gray-400/80 dark:border-gray-300/60 rounded-3xl items-center justify-center">
               <Entypo name="camera" size={52} color={isDark ? 'white' : 'black'} />
               <Text className="text-base mt-2 font-bold dark:text-white">Camera</Text>
