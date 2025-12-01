@@ -1,3 +1,4 @@
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -37,23 +38,37 @@ export default function PreviewScreen() {
             <View className="flex-1 items-center justify-center w-full px-4">
               <Image
                 source={{ uri: uris[currentIndex] }}
-                className="w-full h-3/4 rounded-lg"
+                className="w-full h-3/4 rounded-2xl border-2 border-blue-100"
                 resizeMode="contain"
               />
             </View>
 
-            <View className="h-32 w-full mb-10">
+            <View className="h-32 w-full mb-8">
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12 }}>
                 {uris.map((u, idx) => (
                   <TouchableOpacity key={u + idx} onPress={() => setCurrentIndex(idx)} className="mr-3">
                     <Image
                       source={{ uri: u }}
-                      className={`w-20 h-20 rounded-md ${idx === currentIndex ? 'border-2 border-white' : ''}`}
+                      className={`w-20 h-[75px] rounded-md border ${idx === currentIndex ? 'border-2 border-blue-200' : ''}`}
                       resizeMode="cover"
                     />
                   </TouchableOpacity>
                 ))}
               </ScrollView>
+            </View>
+
+            <View className="bottom-10 w-full px-6">
+              <TouchableOpacity
+                className="bg-blue-500 flex-row justify-center px-6 py-3.5 rounded-full items-center"
+                onPress={() => {
+                  // Logique pour finaliser ou partager les images
+                }}
+              >
+                <Text className="text-white font-bold">Creer le document</Text>
+                {/* <View ml-2>
+                    <FontAwesome6 name="angle-right" size={13} color="white" />
+                </View> */}
+              </TouchableOpacity>
             </View>
           </>
         )}
