@@ -31,9 +31,11 @@ export default function Home() {
       selectionLimit: 0, // 0 = illimité, ou mets le nombre max souhaité
     });
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      // Utilise les images sélectionnées (tableau d'assets)
-      console.log("Images sélectionnées:", result.assets.map(asset => asset.uri));
-      // Tu peux maintenant utiliser les URIs dans ton app
+      // Mappe pour ne garder que les URI
+      const uris = result.assets.map((asset) => asset.uri);
+      // Navigue vers l'écran preview en passant les URIs sérialisées
+      router.push({ pathname: '/preview', params: { images: JSON.stringify(uris) } });
+      console.log("Images sélectionnées:", uris);
     }
   };
 
@@ -87,6 +89,7 @@ export default function Home() {
             </View>
           </Pressable>
         </View>
+        {/* Preview moved to separate screen */}
       </View>
     </SafeAreaView>
   );

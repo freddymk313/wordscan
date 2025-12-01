@@ -24,6 +24,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tab)" options={{ headerShown: false }} />
         <Stack.Screen name="camera" options={{ headerShown: false }} />
+        <Stack.Screen name="preview" options={{ headerShown: false }} />
       </Stack>
 
       <StatusBar style="auto" />
