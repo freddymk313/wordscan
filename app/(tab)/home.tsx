@@ -1,10 +1,10 @@
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -23,16 +23,17 @@ export default function Home() {
       alert("Permission d'accéder à la galerie refusée");
       return;
     }
-    // Ouvre la galerie
+    // Ouvre la galerie avec sélection multiple
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       quality: 1,
+      selectionLimit: 0, // 0 = illimité, ou mets le nombre max souhaité
     });
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      // Utilise l'image sélectionnée (result.assets[0].uri)
-      console.log("Image sélectionnée:", result.assets[0].uri);
-      // Tu peux maintenant utiliser l'URI dans ton app
+      // Utilise les images sélectionnées (tableau d'assets)
+      console.log("Images sélectionnées:", result.assets.map(asset => asset.uri));
+      // Tu peux maintenant utiliser les URIs dans ton app
     }
   };
 
