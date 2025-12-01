@@ -1,36 +1,57 @@
 // app/(tab)/camera.tsx
-import { Camera } from "expo-camera";
-import React, { useEffect, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
+import React, { useRef, useState } from "react";
+import { Button, Platform, Text, TouchableOpacity, View } from "react-native";
 import "../global.css"; // NativeWind
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-// Some bundlers or module resolutions can make the imported `Camera` be a module
-// namespace object instead of the component itself (it may live at `.Camera` or
-// `.default`). Resolve the actual component at runtime and fall back to the
-// imported value. Keep types loose to avoid repeating the previous TypeScript
-// conflicts.
-const CameraComponent: React.ComponentType<any> =
-  // (Camera as any).Camera for cases where the module exports a namespace
-  // object containing the component.
-  (Camera as any).Camera ??
-  // (Camera as any).default for cases where the default export is provided.
-  (Camera as any).default ??
-  // Otherwise use the imported value directly.
-  (Camera as any);
+// Use the new `CameraView` + `useCameraPermissions` API from `expo-camera`.
 
 export default function CameraScreen() {
   const cameraRef = useRef<any>(null);
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
+  const isWeb = Platform.OS === "web";
+  // UX: stay on Expo; no mute-confirm requirement.
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
+  // expo-camera hook for permissions
+  const [permission, requestPermission] = useCameraPermissions();
+  const [facing, setFacing] = useState<CameraType>('back');
 
   const takePhoto = async () => {
+    if (isWeb) {
+      // On web, open the image picker (file dialog / camera if available).
+      try {
+        const result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          quality: 1,
+        });
+        if (!result.canceled) {
+          const uri = result.assets?.[0]?.uri ?? (result as any).uri;
+          if (uri) {
+            setCapturedPhotos([...capturedPhotos, uri]);
+            console.log("Photo capturée (web) :", uri);
+          }
+        }
+      } catch (e) {
+        // Fallback to library if camera isn't available on web
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: false,
+          quality: 1,
+        });
+        if (!result.canceled) {
+          const uri = result.assets?.[0]?.uri ?? (result as any).uri;
+          if (uri) {
+            setCapturedPhotos([...capturedPhotos, uri]);
+            console.log("Photo sélectionnée (web) :", uri);
+          }
+        }
+      }
+      return;
+    }
+
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
       setCapturedPhotos([...capturedPhotos, photo.uri]);
@@ -43,53 +64,68 @@ export default function CameraScreen() {
     // Ici tu peux naviguer vers OCR / génération Word
   };
 
-  if (hasPermission === null) {
+  if (!permission) {
     return (
       <View className="flex-1 items-center justify-center bg-black">
         <Text className="text-white">Demande d'autorisation…</Text>
       </View>
     );
   }
-  if (hasPermission === false) {
+
+  if (!permission.granted) {
     return (
-      <View className="flex-1 items-center justify-center bg-black">
-        <Text className="text-white">Pas d’accès à la caméra</Text>
+      <View className="flex-1 items-center justify-center bg-gray-900 px-6">
+        <Text className="text-white mb-4 text-center">We need your permission to show the camera</Text>
+        <Button title="Grant permission" onPress={requestPermission} />
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-black">
-      <CameraComponent ref={cameraRef} type="back" className="flex-1" />
-
-      {/* Aperçu des photos prises en miniatures (optionnel) */}
-      {capturedPhotos.length > 0 && (
-        <View className="absolute bottom-20 left-4 bg-black/50 px-2 py-1 rounded">
-          <Text className="text-white font-bold text-lg">{capturedPhotos.length}</Text>
+    <View className="flex-1 bg-gray-900">
+      {!isWeb ? (
+        <CameraView ref={cameraRef} style={{ flex: 1 }} facing={facing} />
+      ) : (
+        // On web we can't rely on a native preview; show a placeholder and
+        // let the capture button launch the file/camera picker.
+        <View style={{ flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' }}>
+          <Text className="text-white">Web camera not available — use the capture button</Text>
         </View>
       )}
 
+      {/* Aperçu des photos prises en miniatures (optionnel) */}
+      {/* {capturedPhotos.length > 0 && (
+        <View className="absolute bottom-20 left-4 bg-black/50 px-2 py-1 rounded">
+          <Text className="text-white font-bold text-lg">
+            {capturedPhotos.length}
+          </Text>
+        </View>
+      )} */}
+
       {/* Barre des boutons en bas */}
-      <View className="absolute bottom-4 w-full flex-row justify-around items-center px-8">
+      <View className="absolute bottom-4 w-full flex-row justify-around items-center p-8">
         {/* Compteur en bas gauche */}
-        <View className="flex-1 items-start">
-          <Text className="text-white text-lg font-bold">{capturedPhotos.length}</Text>
+        <View className="flex items-start py-3 px-4 border border-gray-50 rounded-2xl bg-black/50">
+          <Text className="text-white text-lg font-bold">
+            {capturedPhotos.length}
+          </Text>
         </View>
 
         {/* Bouton capture au centre */}
         <TouchableOpacity
-          className="w-20 h-20 bg-white rounded-full items-center justify-center border-4 border-gray-300"
+          className="w-24 h-24 bg-white rounded-full items-center justify-center *border-2 border-gray-300"
           onPress={takePhoto}
         >
-          <Text className="text-black font-bold text-lg">📸</Text>
+          {/* <Text className="text-black font-bold text-lg">📸</Text> */}
         </TouchableOpacity>
 
         {/* Bouton suivant / OK à droite */}
         <TouchableOpacity
-          className="flex-1 items-end bg-blue-500 px-4 py-3 rounded-lg"
+          className="*flex-1 items-end bg-blue-500 px-5 py-3.5 rounded-full"
           onPress={goNext}
         >
-          <Text className="text-white font-bold">Suivant</Text>
+          {/* <Text className="text-white font-bold">Suivant</Text> */}
+          <FontAwesome6 name="angle-right" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </View>
