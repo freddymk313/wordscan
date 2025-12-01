@@ -4,6 +4,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -12,6 +13,28 @@ export default function Home() {
   const isDark = colorScheme === "dark";
 
   const router = useRouter();
+
+  // Fonction pour ouvrir la galerie et sélectionner une image
+  const openGallery = async () => {
+    // Demande la permission
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      alert("Permission d'accéder à la galerie refusée");
+      return;
+    }
+    // Ouvre la galerie
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1,
+    });
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      // Utilise l'image sélectionnée (result.assets[0].uri)
+      console.log("Image sélectionnée:", result.assets[0].uri);
+      // Tu peux maintenant utiliser l'URI dans ton app
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-gray-900">
@@ -23,24 +46,43 @@ export default function Home() {
               className="w-14 h-14 dark:bg-white rounded-full border-none"
               resizeMode="contain"
             />
-            <Text className="text-3xl ml-1 font-bold dark:text-white">ordscan</Text>
+            <Text className="text-3xl ml-1 font-bold dark:text-white">
+              ordscan
+            </Text>
           </View>
 
-          <AntDesign name="moon" size={22} color={isDark ? "white" : "dark"} className="mx-1" />
+          <AntDesign
+            name="moon"
+            size={22}
+            color={isDark ? "white" : "dark"}
+            className="mx-1"
+          />
         </View>
 
         <View className="gap-6 flex-row items-center justify-around py-64">
           <Pressable onPress={() => router.push("/camera")}>
             <View className="block p-14 border border-gray-400/80 dark:border-gray-300/60 rounded-3xl items-center justify-center">
-              <Entypo name="camera" size={52} color={isDark ? 'white' : 'black'} />
-              <Text className="text-base mt-2 font-bold dark:text-white">Camera</Text>
+              <Entypo
+                name="camera"
+                size={52}
+                color={isDark ? "white" : "black"}
+              />
+              <Text className="text-base mt-2 font-bold dark:text-white">
+                Camera
+              </Text>
             </View>
           </Pressable>
 
-          <Pressable onPress={() => console.log("Gallerie pressed!")}>
+          <Pressable onPress={openGallery}>
             <View className="block p-14 border border-gray-400/80 rounded-3xl items-center justify-center">
-              <Entypo name="image" size={52} color={isDark ? 'white': 'black'} />
-              <Text className="text-base mt-2 font-bold dark:text-white">Gallerie</Text>
+              <Entypo
+                name="image"
+                size={52}
+                color={isDark ? "white" : "black"}
+              />
+              <Text className="text-base mt-2 font-bold dark:text-white">
+                Gallerie
+              </Text>
             </View>
           </Pressable>
         </View>
